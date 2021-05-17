@@ -35,8 +35,10 @@ class ShoppingItemAdapter(
 
             override fun onMinusClick() {
                 shoppingItem?.let {
-                    it.amount--
-                    shoppingViewModel.update(it)
+                    if (it.amount > 0) {
+                        it.amount--
+                        shoppingViewModel.update(it)
+                    }
                 }
             }
         }
