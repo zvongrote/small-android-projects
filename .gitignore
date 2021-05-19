@@ -86,3 +86,6 @@ lint/tmp/
 
 # Android Profiling
 *.hprof
+
+# Used by the Secrets Gradle plugin
+secrets.properties
