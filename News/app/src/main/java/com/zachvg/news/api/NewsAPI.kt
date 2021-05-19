@@ -1,6 +1,6 @@
 package com.zachvg.news.api
 
-import com.zachvg.news.NewsResponse
+import com.zachvg.news.models.NewsResponse
 import com.zachvg.news.util.API_KEY
 import retrofit2.Response
 import retrofit2.http.GET

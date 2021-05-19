@@ -1,4 +1,4 @@
-package com.zachvg.news
+package com.zachvg.news.models
 
 data class Source(
     val id: String,

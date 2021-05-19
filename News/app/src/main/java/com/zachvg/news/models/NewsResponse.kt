@@ -1,4 +1,4 @@
-package com.zachvg.news
+package com.zachvg.news.models
 
 data class NewsResponse(
     val articles: List<Article>,
