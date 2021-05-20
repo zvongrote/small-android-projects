@@ -12,10 +12,8 @@ import com.zachvg.news.models.Article
 
 class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
 
-    inner class ArticleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-        private val binding =
-            ItemArticlePreviewBinding.inflate(LayoutInflater.from(itemView.context))
+    inner class ArticleViewHolder(private val binding: ItemArticlePreviewBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         fun bindTo(article: Article) {
             binding.article = article
@@ -38,10 +36,9 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
     val differ = AsyncListDiffer(this, differCallback)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleViewHolder {
-        return ArticleViewHolder(
-            LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_article_preview, parent, false)
-        )
+        val binding =
+            ItemArticlePreviewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ArticleViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
