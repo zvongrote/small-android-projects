@@ -8,6 +8,8 @@ import android.webkit.WebViewClient
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.snackbar.Snackbar
+import com.zachvg.news.R
 import com.zachvg.news.databinding.FragmentArticleBinding
 import com.zachvg.news.ui.NewsViewModel
 
@@ -37,6 +39,12 @@ class ArticleFragment : Fragment() {
         binding.webView.apply {
             webViewClient = WebViewClient()
             loadUrl(article.url)
+        }
+
+        binding.fab.setOnClickListener {
+            viewModel.saveArticle(article)
+            Snackbar.make(it, getString(R.string.article_saved_message), Snackbar.LENGTH_SHORT)
+                .show()
         }
     }
 }
