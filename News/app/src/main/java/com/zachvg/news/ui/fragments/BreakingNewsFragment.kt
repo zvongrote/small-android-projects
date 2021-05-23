@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.zachvg.news.R
 import com.zachvg.news.adapters.NewsAdapter
@@ -19,7 +20,9 @@ private const val TAG = "BreakingNewsFragment"
 class BreakingNewsFragment : Fragment() {
 
     private val viewModel: NewsViewModel by activityViewModels()
-    private lateinit var binding: FragmentBreakingNewsBinding
+    private var _binding: FragmentBreakingNewsBinding? = null
+    private val binding
+        get() = _binding!!
     private lateinit var newsAdapter: NewsAdapter
 
     override fun onCreateView(
@@ -27,7 +30,7 @@ class BreakingNewsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentBreakingNewsBinding.inflate(inflater)
+        _binding = FragmentBreakingNewsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -36,8 +39,17 @@ class BreakingNewsFragment : Fragment() {
 
         setupRecyclerView()
 
+        newsAdapter.setOnItemClickListener {
+            val bundle = Bundle().apply { putSerializable("article", it) }
+
+            findNavController().navigate(
+                R.id.action_breakingNewsFragment_to_articleFragment,
+                bundle
+            )
+        }
+
         viewModel.breakingNews.observe(viewLifecycleOwner) { response ->
-            when(response) {
+            when (response) {
                 is Resource.Success -> {
                     hideProgressBar()
                     response.data?.let { newsResponse ->
@@ -50,9 +62,16 @@ class BreakingNewsFragment : Fragment() {
                         Log.e(TAG, "An error occured: $message")
                     }
                 }
-                is Resource.Loading -> { showProgressBar() }
+                is Resource.Loading -> {
+                    showProgressBar()
+                }
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun hideProgressBar() {

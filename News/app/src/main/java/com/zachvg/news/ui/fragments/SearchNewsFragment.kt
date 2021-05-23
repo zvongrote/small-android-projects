@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.zachvg.news.R
 import com.zachvg.news.adapters.NewsAdapter
@@ -26,7 +27,9 @@ class SearchNewsFragment : Fragment() {
 
     private val viewModel: NewsViewModel by activityViewModels()
 
-    private lateinit var binding: FragmentSearchNewsBinding
+    private var _binding: FragmentSearchNewsBinding? = null
+    private val binding
+        get() = _binding!!
 
     private lateinit var newsAdapter: NewsAdapter
 
@@ -35,7 +38,7 @@ class SearchNewsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentSearchNewsBinding.inflate(inflater)
+        _binding = FragmentSearchNewsBinding.inflate(inflater)
         return binding.root
     }
 
@@ -43,6 +46,15 @@ class SearchNewsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupRecyclerView()
+
+        newsAdapter.setOnItemClickListener {
+            val bundle = Bundle().apply { putSerializable("article", it) }
+
+            findNavController().navigate(
+                R.id.action_searchNewsFragment_to_articleFragment,
+                bundle
+            )
+        }
 
         var job: Job? = null
         binding.etSearch.addTextChangedListener { editable ->
@@ -74,6 +86,11 @@ class SearchNewsFragment : Fragment() {
                 is Resource.Loading -> { showProgressBar() }
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun hideProgressBar() {
