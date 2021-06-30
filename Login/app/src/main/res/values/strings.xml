@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Log In</string>
+    <string name="login">Login</string>
+    <string name="logged_in">Logged In</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="forgot_login">Forgot Login?</string>
+    <string name="login_failed">Username or password is incorrect</string>
+    <string name="too_bad">Too bad, so sad</string>
+    <string name="login_successful">Login Successful!</string>
+    <string name="successful">Successful</string>
+    <string name="go_back">Go Back</string>
+</resources>
