@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Currency Converter</string>
+    <string name="amount">Amount</string>
+    <string name="convert">Convert</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
+    <string name="invalid_amount_message">Invalid amount</string>
+    <string name="conversion_display">%1$s =</string>
+    <string name="loading_currencies_message">Loading currency information…</string>
+
+    <string-array name="placeholer_currencies">
+        <item>USD</item>
+        <item>GBP</item>
+        <item>JPY</item>
+    </string-array>
+</resources>
